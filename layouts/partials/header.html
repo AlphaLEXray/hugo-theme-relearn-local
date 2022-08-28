@@ -50,7 +50,11 @@
           <div class="navigation">
           {{- if and $ispublished ($.Scratch.Get "relearnPrevPage") }}
             {{- with ($.Scratch.Get "relearnPrevPage") }}
-             <a class="nav nav-prev" href="{{.RelPermalink}}" title="{{.Title}} (&#129104;)"><i class="fas fa-chevron-left fa-fw"></i></a>
+              {{- if eq (.RelPermalink) ("/")}}
+              <a class="nav nav-prev" href="{{.RelPermalink}}index.html" title="{{.Title}} (&#129104;)"><i class="fas fa-chevron-left fa-fw"></i></a>
+              {{- else}}
+              <a class="nav nav-prev" href="{{.RelPermalink}}" title="{{.Title}} (&#129104;)"><i class="fas fa-chevron-left fa-fw"></i></a>
+              {{- end}}
             {{- end}}
           {{- else }}
              <span class="nav nav-prev"><i class="fa fa-chevron-left fa-fw"></i></span>
@@ -121,6 +125,18 @@
     {{- template "breadcrumb" dict "page" $parent "depth" $depth }}
   {{- end }}
   {{- if $ispublished }}
-              <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><meta itemprop="position" content="{{ $depth }}" /><a itemprop="item" href="{{ .page.RelPermalink }}"{{if not .depth}} aria-disabled="true"{{end}}><span itemprop="name">{{if .page.Title}}{{ .page.Title }}{{else}}{{ .page.Site.Title }}{{end}}</span></a>{{ if .depth }} > {{ end }}</li>
+    <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement">
+      <meta itemprop="position" content="{{ $depth }}" />
+      {{if eq .page.Name ""}}
+      <a itemprop="item" href="{{ .page.RelPermalink }}index.html"{{if not .depth}} aria-disabled="true"{{end}}>
+        <span itemprop="name">{{if .page.Title}}{{ .page.Title }}{{else}}{{ .page.Site.Title }}{{end}}</span>
+      </a>
+      {{else}}
+      <a itemprop="item" href="{{ .page.RelPermalink }}"{{if not .depth}} aria-disabled="true"{{end}}>
+        <span itemprop="name">{{if .page.Title}}{{ .page.Title }}{{else}}{{ .page.Site.Title }}{{end}}</span>
+      </a>
+      {{end}}
+      {{ if .depth }} > {{ end }}
+    </li>
   {{- end }}
 {{- end }}
