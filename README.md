@@ -1,3 +1,36 @@
+# Changes
+
+This theme was adapted to be able to use it locally in a browser or an Electron app.
+
+In order to use it locally some changes need to be made as seen in this example `config.toml` file:
+
+```toml
+baseURL = '/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+relativeURLs = true
+uglyURLs = true
+
+# Change the default theme to be use when building the site with Hugo
+theme = "relearn" # or theme = "hugo-theme-relearn-local"
+
+# For search functionality
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS", "PRINT"]
+  page = ["HTML", "RSS", "PRINT"]
+
+[params]
+  # Change default color scheme with a variant one. Eg. can be "red", "blue", "green" or an array like [ "blue", "green" ].
+  themeVariant = [ "relearn-dark", "relearn-light" ]
+
+  # Hide breadcrumbs in the header and only show the current page title
+  disableBreadcrumb = false
+
+  # Hide Next and Previous page buttons normally displayed full height beside content
+  disableNextPrev = false
+```
+
 # Hugo Relearn Theme
 
 A theme for [Hugo](https://gohugo.io/) designed for documentation.
